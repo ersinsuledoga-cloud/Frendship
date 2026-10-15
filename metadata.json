@@ -1,0 +1,6 @@
+{
+  "name": "LGS Friendship Word Quest",
+  "description": "8. Sınıf LGS İngilizce 1. Ünite Friendship kelimelerini eğlenceli ve interaktif şekilde öğreten kartlar, eşleştirme oyunu ve LGS sınav maceraları içeren öğrenme platformu.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

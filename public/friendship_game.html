@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>8. Sınıf LGS İngilizce 1. Ünite: Friendship Kelime Oyunu</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
+  <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .transform-style-preserve-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+    .animate-shake {
+      animation: shake 0.4s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased font-sans selection:bg-indigo-100 selection:text-indigo-800 min-h-screen flex flex-col">
+
+  <!-- TOP NAVIGATION BAR -->
+  <header class="sticky top-0 z-40 bg-white/85 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5 cursor-pointer" onclick="showSection('menu')">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-violet-500 text-white flex items-center justify-center shadow-xs font-display font-bold text-lg">
+          8
+        </div>
+        <div>
+          <span class="font-display font-bold text-base sm:text-lg tracking-tight text-slate-900">Friendship Quest</span>
+          <span class="hidden sm:inline-block ml-2 text-xs font-medium text-slate-600">LGS 1. Ünite</span>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="flex items-center gap-1 sm:gap-3 text-xs sm:text-sm font-medium">
+        <button id="nav-btn-menu" onclick="showSection('menu')" class="px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 font-semibold transition-colors">Ana Menü</button>
+        <button id="nav-btn-flashcards" onclick="showSection('flashcards')" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors">Kartlar</button>
+        <button id="nav-btn-matching" onclick="showSection('matching')" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors">Eşleştirme</button>
+        <button id="nav-btn-quiz" onclick="showSection('quiz')" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors">Kelime Avcısı</button>
+      </nav>
+
+      <!-- XP & Sound Indicator -->
+      <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-xs sm:text-sm font-semibold">
+          <span>✨</span>
+          <span id="nav-xp" class="font-mono">0</span>
+          <span class="text-[11px] text-amber-600 hidden sm:inline">XP</span>
+        </div>
+        <button id="sound-toggle-btn" onclick="toggleSound()" class="p-2 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-100 transition-colors" title="Sesi Aç/Kapat">
+          🔊
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 py-6 w-full">
+
+    <!-- ================= 1. ANA MENÜ ================= -->
+    <div id="section-menu" class="space-y-8 animate-fade">
+      <!-- Hero Banner -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-600 via-indigo-700 to-violet-800 text-white p-6 sm:p-10 shadow-lg">
+        <div class="max-w-2xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-indigo-100 text-xs font-semibold mb-4">
+            🔥 8. Sınıf LGS İngilizce Hazırlık
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-extrabold font-display leading-tight mb-3">
+            Unit 1: Friendship <br>
+            <span class="text-indigo-200">Kelime Macerası</span>
+          </h1>
+          <p class="text-indigo-100/90 text-sm sm:text-base leading-relaxed mb-6">
+            LGS sınavında en çok soru çıkan 1. Ünite kelimelerini eğlenceli 3D kartlar, hızlı eşleştirme oyunları ve gerçek sınav tarzı mini testlerle kalıcı olarak öğren! Her oyunda rastgele farklı kelimelerle karşılaşacaksın.
+          </p>
+          <div class="flex flex-wrap items-center gap-3">
+            <button onclick="showSection('flashcards')" class="px-5 py-2.5 rounded-xl bg-white text-indigo-900 font-bold text-sm shadow hover:bg-indigo-50 transition-all">
+              Kartlarla Başla →
+            </button>
+            <button onclick="openGlossaryModal()" class="px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-sm font-medium transition-colors">
+              📖 Kelime Listesi (25 Kelime)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Bar -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs">
+          <span class="text-xs text-slate-500 font-medium">Öğrenilen Kelimeler</span>
+          <div class="mt-2 text-2xl font-black font-display text-slate-900">
+            <span id="stat-learned">0</span> <span class="text-xs font-normal text-slate-400">/ 25</span>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs">
+          <span class="text-xs text-slate-500 font-medium">Eşleştirme Rekoru</span>
+          <div class="mt-2 text-2xl font-black font-display text-indigo-600">
+            <span id="stat-match-score">0</span> <span class="text-xs font-normal text-slate-400">puan</span>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs">
+          <span class="text-xs text-slate-500 font-medium">LGS Sınavı En Yüksek</span>
+          <div class="mt-2 text-2xl font-black font-display text-amber-500">
+            <span id="stat-quiz-score">0</span> <span class="text-xs font-normal text-slate-400">/ 10</span>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs">
+          <span class="text-xs text-slate-500 font-medium">Toplam Başarı Puanı</span>
+          <div class="mt-2 text-2xl font-black font-display text-purple-600">
+            <span id="stat-xp">0</span> <span class="text-xs font-normal text-slate-400">XP</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Module Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div onclick="showSection('flashcards')" class="cursor-pointer rounded-2xl bg-white border border-slate-200/80 hover:border-indigo-300 p-6 shadow-xs hover:shadow-md transition-all text-left">
+          <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl font-bold mb-4">🃏</div>
+          <span class="text-xs font-semibold uppercase tracking-wider text-indigo-600">1. BÖLÜM</span>
+          <h3 class="text-lg font-bold font-display text-slate-900 mt-1 mb-2">Flashcards (Kelime Kartları)</h3>
+          <p class="text-slate-600 text-sm leading-relaxed mb-4">Her girişte rastgele sıralanan 3D kartlar, sesli okuma ve "Biliyorum / Çalışmalıyım" işaretleme.</p>
+          <span class="text-xs font-bold text-indigo-600">Kartları Aç →</span>
+        </div>
+
+        <div onclick="showSection('matching')" class="cursor-pointer rounded-2xl bg-white border border-slate-200/80 hover:border-violet-300 p-6 shadow-xs hover:shadow-md transition-all text-left">
+          <div class="w-12 h-12 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center text-xl font-bold mb-4">🧩</div>
+          <span class="text-xs font-semibold uppercase tracking-wider text-violet-600">2. BÖLÜM</span>
+          <h3 class="text-lg font-bold font-display text-slate-900 mt-1 mb-2">Anlam Eşleştirme Yarışması</h3>
+          <p class="text-slate-600 text-sm leading-relaxed mb-4">Her turda farklı 6 kelime! 25 kelimenin tamamını tekrar et, seri yakala ve rekor kır.</p>
+          <span class="text-xs font-bold text-violet-600">Yarışmaya Başla →</span>
+        </div>
+
+        <div onclick="showSection('quiz')" class="cursor-pointer rounded-2xl bg-white border border-slate-200/80 hover:border-amber-300 p-6 shadow-xs hover:shadow-md transition-all text-left">
+          <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl font-bold mb-4">🎯</div>
+          <span class="text-xs font-semibold uppercase tracking-wider text-amber-600">3. BÖLÜM</span>
+          <h3 class="text-lg font-bold font-display text-slate-900 mt-1 mb-2">LGS Tarzı Kelime Avcısı</h3>
+          <p class="text-slate-600 text-sm leading-relaxed mb-4">20 soruluk havuzdan her seferinde rastgele seçilen 10 soru ve karıştırılmış şıklar!</p>
+          <span class="text-xs font-bold text-amber-600">Sınavı Başlat →</span>
+        </div>
+      </div>
+
+      <!-- Golden Rules -->
+      <div class="rounded-2xl bg-amber-50/70 border border-amber-200/80 p-5 sm:p-6 text-sm text-amber-950">
+        <h4 class="font-bold text-base mb-2">💡 LGS Friendship 1. Ünite Altın İpuçları:</h4>
+        <ul class="space-y-1.5 list-disc list-inside text-amber-900/90">
+          <li><strong>Count on = Rely on = Trust:</strong> "Güvenmek" anlamındaki bu 3 fiil birbirinin yerine kullanılır.</li>
+          <li><strong>Support = Back up:</strong> "Destek olmak, arka çıkmak" anlamında LGS diyaloglarının vazgeçilmezidir.</li>
+          <li><strong>Refuse with an excuse:</strong> Daveti mazeret bildirerek reddetme cümleleri her sınavda mutlaka sorulur.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ================= 2. BÖLÜM: FLASHCARDS ================= -->
+    <div id="section-flashcards" class="hidden max-w-2xl mx-auto space-y-6">
+      <!-- Filter and Controls -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-1 p-1 bg-slate-100 rounded-xl border border-slate-200/80 w-full sm:w-auto">
+          <button id="fc-filter-all" onclick="setCardFilter('all')" class="flex-1 sm:flex-initial px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-white text-indigo-700 shadow-xs">Tümü (25)</button>
+          <button id="fc-filter-learning" onclick="setCardFilter('learning')" class="flex-1 sm:flex-initial px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900">Çalışmalıyım</button>
+          <button id="fc-filter-learned" onclick="setCardFilter('learned')" class="flex-1 sm:flex-initial px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900">Biliyorum</button>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button onclick="shuffleCards()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 shadow-xs" title="Kartları Karıştır">
+            🔀 Yeni Sıralama
+          </button>
+          <div class="text-xs font-semibold text-slate-500">
+            <span id="fc-counter-current" class="text-slate-900 font-bold">1</span> / <span id="fc-counter-total">25</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3D Card -->
+      <div class="perspective-1000 w-full min-h-[380px] sm:min-h-[400px]">
+        <div id="fc-card" onclick="toggleCardFlip()" class="relative w-full h-full min-h-[380px] sm:min-h-[400px] rounded-3xl cursor-pointer transition-transform duration-500 transform-style-preserve-3d shadow-md hover:shadow-lg">
+          <!-- Front Face (English) -->
+          <div class="absolute inset-0 backface-hidden w-full h-full rounded-3xl bg-gradient-to-br from-white via-slate-50 to-indigo-50/40 border border-slate-200 p-6 sm:p-8 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span id="fc-category" class="text-xs font-bold uppercase tracking-wider text-indigo-600">NOUN</span>
+              <button onclick="speakCurrentWord(event)" class="p-2.5 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-transform active:scale-95" title="Sesli Dinle (İngilizce)">
+                🔊
+              </button>
+            </div>
+
+            <div class="text-center my-auto py-4">
+              <h3 id="fc-word-en" class="text-3xl sm:text-5xl font-extrabold font-display text-slate-900 tracking-tight mb-4">Friendship</h3>
+              <div id="fc-example-en" class="bg-white/80 rounded-xl p-3.5 border border-slate-200/60 max-w-md mx-auto text-sm text-slate-600 italic">
+                "True friendship lasts forever."
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-xs text-slate-500 pt-3 border-t border-slate-100">
+              <span class="text-indigo-600 font-semibold">🔄 Türkçesi için dokun</span>
+              <span class="hidden sm:inline">Klavye: [Boşluk] Çevir · [S] Dinle</span>
+            </div>
+          </div>
+
+          <!-- Back Face (Turkish) -->
+          <div class="absolute inset-0 backface-hidden rotate-y-180 w-full h-full rounded-3xl bg-gradient-to-br from-indigo-600 via-indigo-700 to-violet-800 text-white border border-indigo-500/50 p-6 sm:p-8 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-indigo-200">TÜRKÇE ANLAMI & LGS NOTU</span>
+              <button onclick="speakCurrentWord(event)" class="p-2 rounded-full bg-white/15 hover:bg-white/25 text-white" title="Sesli Dinle">
+                🔊
+              </button>
+            </div>
+
+            <div class="text-center my-auto py-2">
+              <h3 id="fc-word-tr" class="text-2xl sm:text-4xl font-extrabold font-display text-white mb-2">Arkadaşlık, dostluk</h3>
+              <p id="fc-example-tr" class="text-indigo-100/90 text-sm italic mb-4">"Gerçek arkadaşlık sonsuza kadar sürer."</p>
+
+              <div id="fc-lgs-tip-box" class="bg-white/10 backdrop-blur-md rounded-xl p-3 text-left border border-white/15 text-xs text-indigo-50 leading-relaxed max-w-md mx-auto">
+                <div class="font-bold text-amber-300 mb-1">ℹ️ LGS Sınav İpucu:</div>
+                <span id="fc-lgs-tip">Ünitenin ana başlığı. Paragraflarda arkadaşlığın önemi sıkça vurgulanır.</span>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-xs text-indigo-200 pt-3 border-t border-white/10">
+              <span>🔄 İngilizce için tekrar dokun</span>
+              <span id="fc-synonym" class="text-indigo-100 truncate max-w-[200px]"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons: Status and Nav -->
+      <div class="grid grid-cols-2 gap-3">
+        <button id="fc-btn-learning" onclick="toggleStatusLearning()" class="py-3 px-4 rounded-2xl font-semibold text-sm border bg-white text-amber-800 border-amber-200 hover:bg-amber-50 transition-colors">
+          ⭐ Çalışmalıyım
+        </button>
+        <button id="fc-btn-learned" onclick="toggleStatusLearned()" class="py-3 px-4 rounded-2xl font-semibold text-sm border bg-white text-emerald-800 border-emerald-200 hover:bg-emerald-50 transition-colors">
+          ✓ Biliyorum (+15 XP)
+        </button>
+      </div>
+
+      <div class="flex items-center justify-between pt-2">
+        <button onclick="prevCard()" class="px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium text-xs sm:text-sm">
+          ← Önceki Kart
+        </button>
+        <button onclick="nextCard()" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm">
+          Sonraki Kart →
+        </button>
+      </div>
+    </div>
+
+    <!-- ================= 3. BÖLÜM: EŞLEŞTİRME ================= -->
+    <div id="section-matching" class="hidden max-w-3xl mx-auto space-y-6">
+      <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span class="px-3 py-1 rounded-lg bg-indigo-50 text-indigo-700 font-bold text-xs border border-indigo-100">
+            Tur <span id="match-round-num">1</span>
+          </span>
+          <span id="match-combo-badge" class="hidden px-2.5 py-1 rounded-lg bg-amber-500 text-white font-bold text-xs animate-bounce">
+            ⚡ <span id="match-combo-num">2</span>x Seri!
+          </span>
+        </div>
+
+        <div class="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm font-semibold">
+          <span class="text-slate-700">⏱️ <span id="match-timer" class="font-mono">0:00</span></span>
+          <span class="text-rose-600">❌ <span id="match-errors" class="font-mono">0</span> Hata</span>
+          <span class="text-indigo-600">✨ <span id="match-score" class="font-mono">0</span> Puan</span>
+        </div>
+
+        <button onclick="initMatchingRound()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-100 rounded-lg transition-colors" title="Farklı Kelimeler Getir">
+          <span>🔄 Yeni Kelimeler</span>
+        </button>
+      </div>
+
+      <div class="text-center text-xs text-slate-600">
+        Bir İngilizce kelimeye, ardından Türkçe anlamına dokunarak çiftleri birleştir.
+      </div>
+
+      <!-- Tile Grid -->
+      <div id="match-tiles-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- ================= 4. BÖLÜM: KELİME AVCISI (QUIZ) ================= -->
+    <div id="section-quiz" class="hidden max-w-2xl mx-auto space-y-6">
+      <!-- Quiz Header -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex items-center justify-between gap-4">
+        <div>
+          <span class="text-xs text-slate-500 font-medium">Soru</span>
+          <div class="text-xl font-black font-display text-slate-900">
+            <span id="quiz-current-idx">1</span> <span class="text-xs font-normal text-slate-400">/ 10</span>
+          </div>
+        </div>
+
+        <div class="flex-1 max-w-[200px] bg-slate-100 h-2 rounded-full overflow-hidden">
+          <div id="quiz-progress-bar" class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: 10%"></div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <div class="px-3 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-100 font-bold text-xs">
+            ✓ <span id="quiz-score-badge">0</span> Doğru
+          </div>
+          <button onclick="initQuiz()" class="p-1.5 rounded-lg border border-slate-200 text-slate-500 hover:text-slate-800 hover:bg-slate-100" title="Soruları Karıştır & Yeni Sorular Getir">
+            🔀
+          </button>
+        </div>
+      </div>
+
+      <!-- Question Card -->
+      <div id="quiz-card" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-xs space-y-5">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <span id="quiz-scenario-title" class="text-xs font-bold uppercase tracking-wider text-indigo-600">Soru 1: LGS Diyalog</span>
+          <span id="quiz-target-word" class="text-xs text-slate-600 font-medium">Hedef: Back up</span>
+        </div>
+
+        <div id="quiz-dialogue-box" class="hidden bg-slate-50 rounded-2xl p-4 border border-slate-200/60 space-y-2 text-sm">
+          <!-- Dialogue lines -->
+        </div>
+
+        <div id="quiz-question-text" class="text-base sm:text-lg font-bold font-display text-slate-900 whitespace-pre-line leading-snug">
+          According to the conversation above, which of the following completes the blank?
+        </div>
+
+        <!-- Options Container -->
+        <div id="quiz-options-container" class="grid grid-cols-1 gap-2.5 pt-2">
+          <!-- Rendered by JS -->
+        </div>
+
+        <!-- Explanation & Next Button Box -->
+        <div id="quiz-explanation-box" class="hidden pt-4 border-t border-slate-100 space-y-4">
+          <div class="p-4 rounded-2xl bg-indigo-50 border border-indigo-100 text-xs sm:text-sm text-indigo-950">
+            <strong class="text-indigo-900 block mb-1">ℹ️ LGS Çözüm Analizi:</strong>
+            <span id="quiz-explanation-text"></span>
+          </div>
+          <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="w-full py-3.5 px-6 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-xs">
+            Sonraki Soruya Geç →
+          </button>
+        </div>
+      </div>
+
+      <!-- Quiz Results Card (Hidden initially) -->
+      <div id="quiz-results-card" class="hidden bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-lg text-center space-y-6">
+        <div class="text-5xl">🏆</div>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">TEBRİKLER! TEST BİTTİ</span>
+          <h2 id="quiz-result-title" class="text-3xl font-black font-display text-slate-900 mt-1">Harika Sonuç!</h2>
+          <p class="text-slate-600 text-sm mt-1">LGS 1. Ünite Friendship Kelime Avcısını tamamladın.</p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3 bg-slate-50 rounded-2xl p-4 border border-slate-200">
+          <div>
+            <span class="text-xs text-slate-500 block">Doğru</span>
+            <span id="quiz-final-correct" class="text-2xl font-black text-emerald-600">0</span> / 10
+          </div>
+          <div>
+            <span class="text-xs text-slate-500 block">Başarı</span>
+            <span id="quiz-final-percent" class="text-2xl font-black text-indigo-600">%0</span>
+          </div>
+          <div>
+            <span class="text-xs text-slate-500 block">Kazanılan</span>
+            <span id="quiz-final-xp" class="text-2xl font-black text-amber-600">+0 XP</span>
+          </div>
+        </div>
+
+        <button onclick="initQuiz()" class="w-full py-3 px-5 rounded-xl bg-indigo-600 text-white font-bold text-sm hover:bg-indigo-700">
+          Farklı Sorularla Yeni Test Başlat 🔀
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- GLOSSARY MODAL -->
+  <div id="glossary-modal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6">
+    <div class="bg-white rounded-3xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+        <div>
+          <h3 class="text-lg font-bold font-display text-slate-900">1. Ünite Friendship Kelime Listesi</h3>
+          <p class="text-xs text-slate-500">25 Kelime · İngilizce telaffuzları dinle</p>
+        </div>
+        <button onclick="closeGlossaryModal()" class="p-2 text-slate-400 hover:text-slate-700 text-xl font-bold">✕</button>
+      </div>
+
+      <div class="p-3 bg-slate-50 border-b border-slate-100">
+        <input id="glossary-search" type="text" oninput="renderGlossary()" placeholder="Kelime ara (İngilizce / Türkçe)..." class="w-full px-3 py-2 text-sm bg-white rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
+      </div>
+
+      <div id="glossary-list" class="flex-1 overflow-y-auto p-4 divide-y divide-slate-100 space-y-2">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="p-4 bg-slate-50 border-t border-slate-100 text-right">
+        <button onclick="closeGlossaryModal()" class="px-4 py-2 bg-indigo-600 text-white font-semibold text-xs rounded-xl">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPLICATION SCRIPTS -->
+  <script>
+    // 1. DATA DEFINITIONS
+    const VOCABULARY = [
+      { id: 'friendship', en: 'Friendship', tr: 'Arkadaşlık, dostluk', cat: 'noun', exEn: 'True friendship lasts forever.', exTr: 'Gerçek arkadaşlık sonsuza kadar sürer.', tip: 'Ünitenin ana başlığı. Paragraflarda arkadaşlığın önemi sıkça vurgulanır.' },
+      { id: 'close-friend', en: 'Close friend', tr: 'Yakın arkadaş', cat: 'noun', exEn: 'Ayşe is my close friend; we share everything.', exTr: 'Ayşe benim yakın arkadaşım; her şeyimizi paylaşırız.', tip: 'Paragraf sorularında "best friend" ile eş anlamlıdır.' },
+      { id: 'best-friend', en: 'Best friend', tr: 'En iyi arkadaş', cat: 'noun', exEn: 'A best friend is like a brother or sister.', exTr: 'En iyi arkadaş bir kardeş gibidir.', tip: 'LGS diyaloglarında "Who is your best friend?" kalıbında çıkar.' },
+      { id: 'true-friend', en: 'True friend', tr: 'Doğru, gerçek arkadaş', cat: 'noun', exEn: 'A true friend never leaves you alone.', exTr: 'Doğru bir arkadaş seni asla yalnız bırakmaz.', tip: 'İdeal arkadaşın nitelikleri sorulduğunda aranacak ifadedir.' },
+      { id: 'buddy', en: 'Buddy', tr: 'Kanka, can dostu', cat: 'noun', exEn: 'Ali is my buddy from primary school.', exTr: 'Ali benim ilkokuldan kankam.', tip: 'Davet mektuplarında ve samimi hitaplarda sık görülür.' },
+      { id: 'mate', en: 'Mate', tr: 'Arkadaş, dost', cat: 'noun', exEn: 'We are classmates and good mates.', exTr: 'Biz sınıf arkadaşıyız ve iyi dostlarız.', tip: 'Classmate veya roommate ile bağlantılı kullanılır.' },
+      { id: 'support', en: 'Support', tr: 'Destek olmak, yardım etmek', cat: 'verb', exEn: 'Good friends always support each other.', exTr: 'İyi arkadaşlar birbirlerine daima destek olurlar.', tip: '"Back up" ile birebir eş anlamlıdır!' },
+      { id: 'back-up', en: 'Back up', tr: 'Destek olmak, arka çıkmak', cat: 'verb', exEn: 'My friends always back me up.', exTr: 'Arkadaşlarım her zaman bana arka çıkar.', tip: 'LGS’de en çok sorulan Phrasal Verb: Back up = Support.' },
+      { id: 'trust', en: 'Trust', tr: 'Güvenmek / Güven', cat: 'verb', exEn: 'You can trust him; he never tells lies.', exTr: 'Ona güvenebilirsin; asla yalan söylemez.', tip: 'LGS üçlüsü: Trust = Count on = Rely on.' },
+      { id: 'count-on', en: 'Count on', tr: 'Güvenmek, bel bağlamak', cat: 'verb', exEn: 'I count on Zeynep because she keeps secrets.', exTr: 'Zeynep’e güvenirim çünkü sırlarımı saklar.', tip: 'Boşluk doldurma sorularının 1 numaralı yıldızı.' },
+      { id: 'rely-on', en: 'Rely on', tr: 'Güvenmek, inanmak', cat: 'verb', exEn: 'True friends can always rely on each other.', exTr: 'Gerçek arkadaşlar birbirlerine daima güvenebilirler.', tip: 'Genellikle "reliable" sıfatıyla birlikte sorulur.' },
+      { id: 'reliable', en: 'Reliable / Trustful', tr: 'Güvenilir, itimat edilir', cat: 'adjective', exEn: 'A reliable friend never shares secrets.', exTr: 'Güvenilir arkadaş sırları asla paylaşmaz.', tip: 'Kişilik özelliklerinde en çok geçen doğru cevaptır.' },
+      { id: 'honest', en: 'Honest', tr: 'Dürüst, doğru sözlü', cat: 'adjective', exEn: 'He is honest and always tells the truth.', exTr: 'O dürüsttür ve her zaman doğruyu söyler.', tip: '"Never tells lies" ipucu varsa cevap honest’tır!' },
+      { id: 'lie', en: 'Lie (Tell a lie)', tr: 'Yalan söylemek, yalan', cat: 'verb', exEn: 'Never tell a lie to your best friend.', exTr: 'En iyi arkadaşına asla yalan söyleme.', tip: 'Negatif kişilik özelliği: A good friend never tells lies.' },
+      { id: 'get-on-well-with', en: 'Get on well with', tr: 'İyi geçinmek, anlaşmak', cat: 'phrase', exEn: 'I get on well with my classmates.', exTr: 'Sınıf arkadaşlarımla çok iyi geçinirim.', tip: 'Zıt anlamı: argue (tartışmak).' },
+      { id: 'share-a-secret', en: 'Share a secret', tr: 'Sır paylaşmak', cat: 'phrase', exEn: 'We share our secrets because we trust each other.', exTr: 'Birbirimize güvendiğimiz için sırlarımızı paylaşırız.', tip: 'Keep a secret (sır tutmak) ile karıştırılmamalı.' },
+      { id: 'accept', en: 'Accept', tr: 'Kabul etmek (daveti)', cat: 'verb', exEn: 'I’d love to come! (She accepted).', exTr: 'Çok isterim! (Daveti kabul etti).', tip: 'I can’t refuse this offer = Daveti kabul etti demektir.' },
+      { id: 'refuse', en: 'Refuse', tr: 'Reddetmek, geri çevirmek', cat: 'verb', exEn: 'I’m sorry, but I can’t join the party.', exTr: 'Üzgünüm ama partiye katılamam.', tip: 'LGS’de "Who refuses the invitation?" sorusu kesin çıkar.' },
+      { id: 'excuse', en: 'Excuse', tr: 'Mazeret, bahane', cat: 'noun', exEn: 'She made an excuse: "I must study."', exTr: 'Bir mazeret sundu: "Çalışmak zorundayım."', tip: '"Who makes an excuse?" sorularında gerekçeyi bul.' },
+      { id: 'loyal', en: 'Loyal / Loyalty', tr: 'Sadık / Sadakat', cat: 'adjective', exEn: 'Loyal friends stand by you in tough times.', exTr: 'Sadık arkadaşlar zor zamanlarında yanında durur.', tip: 'İyi arkadaşın en önemli erdemlerinden biridir.' },
+      { id: 'laid-back', en: 'Laid-back', tr: 'Rahat, sakin, telaşsız', cat: 'adjective', exEn: 'He is laid-back; he never worries about exams.', exTr: 'O çok rahattır; sınavlar için endişelenmez.', tip: '"Relaxed and calm" ifadesiyle tanımlanır.' },
+      { id: 'outgoing', en: 'Outgoing', tr: 'Dışa dönük, sosyal', cat: 'adjective', exEn: 'Defne is outgoing; she loves meeting people.', exTr: 'Defne dışa dönüktür; yeni insanlarla tanışmayı sever.', tip: '"Loves making new friends" ipucu varsa outgoing’dir.' },
+      { id: 'strong-bond', en: 'Strong bond', tr: 'Güçlü bağ', cat: 'noun', exEn: 'They have a strong bond.', exTr: 'Çok güçlü bir bağları var.', tip: 'Metin sorularında en iyi arkadaşların arasındaki ilişkiyi belirtir.' },
+      { id: 'punctual', en: 'Punctual', tr: 'Dakik, vaktinde gelen', cat: 'adjective', exEn: 'He is punctual; he always arrives on time.', exTr: 'O dakiktir; daima vaktinde gelir.', tip: '"Never comes late" ipucu doğrudan punctual’dır.' },
+      { id: 'argue', en: 'Argue', tr: 'Tartışmak, münakaşa etmek', cat: 'verb', exEn: 'Good friends rarely argue.', exTr: 'İyi arkadaşlar nadiren tartışırlar.', tip: 'Tartışsalar bile hızlıca çözerler.' },
+      { id: 'fair', en: 'Fair', tr: 'Adil, hakkaniyetli', cat: 'adjective', exEn: 'A fair person treats everyone equally.', exTr: 'Adil insan herkese eşit davranır.', tip: 'Oyunlarda hile yapmayan, hak yemeyen kişidir.' }
+    ];
+
+    const QUIZ_BANK = [
+      {
+        title: 'Karşılıklı Konuşma (LGS Diyalog)',
+        target: 'Back up',
+        dialogue: [
+          { speaker: 'Efe', text: 'Why is Kerem your best friend in class?' },
+          { speaker: 'Bora', text: 'Because he always ________ me up when I have a problem. I know he is always there for me.' }
+        ],
+        text: 'According to the conversation above, which of the following completes the blank?',
+        options: ['backs', 'argues', 'refuses', 'lies'],
+        correct: 'backs',
+        explanation: 'Doğru cevap "backs". "Back up" phrasal verbi "destek olmak, arka çıkmak" (support) anlamına gelir.'
+      },
+      {
+        title: 'Kişisel Özellik Analizi (Dürüstlük)',
+        target: 'Honest',
+        text: '“Zeynep never tells lies to her friends. She always tells the truth, even if it is difficult.”\nAccording to the sentence, Zeynep is a/an ________ person.',
+        options: ['honest', 'laid-back', 'punctual', 'unfair'],
+        correct: 'honest',
+        explanation: 'Doğru cevap "honest" (dürüst). Cümledeki "never tells lies" ve "always tells the truth" dürüstlüğü açıklar.'
+      },
+      {
+        title: 'Davet ve Mazeret Bildirme',
+        target: 'Refuse & Excuse',
+        text: 'Elif invites her friends to a bowling tournament on Saturday. Which of the following responses REFUSES the invitation by making an EXCUSE (mazeret)?',
+        options: [
+          'I\'d love to, but I must help my father paint the garage.',
+          'Awesome! I can\'t refuse this cool offer.',
+          'Sure, that sounds fun! What time does it start?',
+          'No, I don\'t want to come.'
+        ],
+        correct: 'I\'d love to, but I must help my father paint the garage.',
+        explanation: 'Doğru cevap "I\'d love to, but I must help...". Cümle hem kibarca reddetmekte (refuse) hem mazeret sunmaktadır.'
+      },
+      {
+        title: 'Eş Anlamlı Kelime Bilgisi',
+        target: 'Count on / Rely on',
+        text: '“I can always count on my buddy Sinan because he is a reliable friend.”\nWhich word can replace "count on" in the sentence above without changing the meaning?',
+        options: ['rely on', 'argue with', 'refuse', 'share'],
+        correct: 'rely on',
+        explanation: 'Doğru cevap "rely on". Count on = Rely on = Trust (güvenmek).'
+      },
+      {
+        title: 'Zaman ve Randevu Davranışı',
+        target: 'Punctual',
+        text: '“Mert is never late for our meetings. When we say we will meet at 2:00 PM, he arrives at 1:55 PM.”\nWhich adjective best describes Mert?',
+        options: ['Punctual', 'Laid-back', 'Selfish', 'Aggressive'],
+        correct: 'Punctual',
+        explanation: 'Doğru cevap "Punctual" (dakik). "Never late" ve "arrives on time" dakikliği ifade eder.'
+      },
+      {
+        title: 'İlişki ve Arkadaşlık Bağı',
+        target: 'Get on well with',
+        text: '“Selin and Derya have lots of things in common. They rarely argue and they have a strong bond.”\nAccording to the information, Selin and Derya ________ each other.',
+        options: ['get on well with', 'tell lies to', 'make excuses to', 'refuse'],
+        correct: 'get on well with',
+        explanation: 'Doğru cevap "get on well with" (iyi geçinmek). Nadiren tartışan ("rarely argue") kişiler iyi anlaşır.'
+      },
+      {
+        title: 'Karakter Analizi (Rahatlık)',
+        target: 'Laid-back',
+        text: '“Can is a very ________ boy. Even before the big LGS exam, he never panics or stresses out. He stays completely calm and relaxed.”\nWhich word best completes the sentence?',
+        options: ['laid-back', 'outgoing', 'jealous', 'honest'],
+        correct: 'laid-back',
+        explanation: 'Doğru cevap "laid-back" (rahat, sakin). "Never panics", "calm and relaxed" bunu anlatır.'
+      },
+      {
+        title: 'Güven ve Sır Saklama',
+        target: 'Trust',
+        text: '“A true friend never shares your secret with other people. You can easily ________ him.”\nWhich of the following completes the sentence correctly?',
+        options: ['trust', 'argue', 'refuse', 'excuse'],
+        correct: 'trust',
+        explanation: 'Doğru cevap "trust" (güvenmek). Sırrını saklayan kişiye güvenebilirsin.'
+      },
+      {
+        title: 'Sosyal Kişilik Tanımı',
+        target: 'Outgoing',
+        text: '“Gizem enjoys spending time with people, chatting, and attending social clubs. She makes new friends very easily.”\nWhich personal trait matches Gizem’s personality?',
+        options: ['Outgoing', 'Punctual', 'Laid-back', 'Fair'],
+        correct: 'Outgoing',
+        explanation: 'Doğru cevap "Outgoing" (dışa dönük, sosyal). Yeni arkadaşlar edinmeyi seven kişi outgoing’dir.'
+      },
+      {
+        title: 'Adalet ve Eşitlik',
+        target: 'Fair',
+        text: '“In our games, Melis never cheats and she treats all players equally according to the rules.”\nAccording to this, Melis is always ________.',
+        options: ['fair', 'laid-back', 'selfish', 'dishonest'],
+        correct: 'fair',
+        explanation: 'Doğru cevap "fair" (adil). Hile yapmayan ("never cheats") ve eşit davranan kişi adildir.'
+      },
+      {
+        title: 'Tartışmak (Argue)',
+        target: 'Argue',
+        text: '“Good buddies almost never ________ with each other because they respect each other’s ideas.”\nWhich word best fits the blank?',
+        options: ['argue', 'support', 'accept', 'count'],
+        correct: 'argue',
+        explanation: 'Doğru cevap "argue" (tartışmak). Saygılı arkadaşlar nadiren tartışırlar.'
+      },
+      {
+        title: 'Sadakat (Loyal)',
+        target: 'Loyal',
+        text: '“A ________ friend stays with you through difficult and bad days, not just when things are fun.”\nWhich word correctly completes the sentence?',
+        options: ['loyal', 'laid-back', 'unfair', 'dishonest'],
+        correct: 'loyal',
+        explanation: 'Doğru cevap "loyal" (sadık, vefalı). Zor günlerde de yanında kalan kişi sadıktır.'
+      },
+      {
+        title: 'Davet Kabulü (Accept)',
+        target: 'Accept',
+        text: 'Tom: "We are having a picnic this Sunday. Would you like to join us?"\nWhich response ACCEPTS the invitation?',
+        options: [
+          'I\'d love to! I can\'t miss this opportunity.',
+          'I am so sorry, but I have a doctor appointment.',
+          'Maybe next time, I need to rest.',
+          'I refuse to go to picnics.'
+        ],
+        correct: 'I\'d love to! I can\'t miss this opportunity.',
+        explanation: 'Doğru cevap daveti kabul eden "I\'d love to! I can\'t miss this opportunity" seçeneğidir.'
+      },
+      {
+        title: 'Destek Olmak (Support)',
+        target: 'Support',
+        text: '“Whenever my sister is preparing for exams, I always ________ her by explaining difficult topics.”\nWhich word completes the blank best?',
+        options: ['support', 'refuse', 'argue', 'lie'],
+        correct: 'support',
+        explanation: 'Doğru cevap "support" (destek olmak = back up).'
+      },
+      {
+        title: 'Kanka / Yakın Dost (Buddy)',
+        target: 'Buddy',
+        text: '“Jack and I do all homework together and play soccer every evening. He is my best ________.”\nWhich word fits best?',
+        options: ['buddy', 'excuse', 'argument', 'lie'],
+        correct: 'buddy',
+        explanation: 'Doğru cevap "buddy" (kanka, dost).'
+      },
+      {
+        title: 'Güvenilir (Reliable)',
+        target: 'Reliable',
+        text: '“If you tell something private to Aylin, you can be sure nobody else will hear it. She is extremely ________.”\nWhich word completes the description?',
+        options: ['reliable', 'unpunctual', 'aggressive', 'laid-back'],
+        correct: 'reliable',
+        explanation: 'Doğru cevap "reliable" (güvenilir).'
+      },
+      {
+        title: 'Gerçek Dost (True Friend)',
+        target: 'True friend',
+        text: '“A ________ friend walks in when the rest of the world walks out.”',
+        options: ['true', 'unreliable', 'selfish', 'late'],
+        correct: 'true',
+        explanation: 'Doğru cevap "true" (gerçek arkadaş).'
+      },
+      {
+        title: 'Güçlü Bağ (Strong Bond)',
+        target: 'Strong bond',
+        text: '“Even though Ali moved to another city, we still talk every day. We have a ________ between us.”',
+        options: ['strong bond', 'bad excuse', 'loud argument', 'dishonest lie'],
+        correct: 'strong bond',
+        explanation: 'Doğru cevap "strong bond" (güçlü bağ).'
+      },
+      {
+        title: 'Yalan Söylemek (Lie)',
+        target: 'Lie',
+        text: '“Our teacher says: ‘Never ________ to anyone, because honesty is the foundation of friendship.’ ”',
+        options: ['tell a lie', 'support friends', 'keep secrets', 'be punctual'],
+        correct: 'tell a lie',
+        explanation: 'Doğru cevap "tell a lie" (yalan söylemek).'
+      },
+      {
+        title: 'Mazeret Sunma (Excuse)',
+        target: 'Excuse',
+        text: '“I am really sorry. My sister was sick and I had to take care of her.”\nDeniz is giving a/an ________.',
+        options: ['excuse', 'argument', 'secret', 'invitation'],
+        correct: 'excuse',
+        explanation: 'Doğru cevap "excuse" (mazeret).'
+      }
+    ];
+
+    // 2. AUDIO & SPEECH SYNTHESIS ENGINE
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    function getAudioCtx() {
+      if (!audioCtx) {
+        const AudioClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioClass) audioCtx = new AudioClass();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      document.getElementById('sound-toggle-btn').innerText = soundEnabled ? '🔊' : '🔇';
+      if (soundEnabled) playSoundEffect('click');
+    }
+
+    function playSoundEffect(type) {
+      if (!soundEnabled) return;
+      const ctx = getAudioCtx();
+      if (!ctx) return;
+
+      try {
+        const now = ctx.currentTime;
+        if (type === 'click') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(500, now);
+          osc.frequency.exponentialRampToValueAtTime(250, now + 0.05);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(now + 0.05);
+        } else if (type === 'flip') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(260, now);
+          osc.frequency.exponentialRampToValueAtTime(500, now + 0.08);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(now + 0.08);
+        } else if (type === 'correct') {
+          [523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now + i * 0.07);
+            gain.gain.setValueAtTime(0, now + i * 0.07);
+            gain.gain.linearRampToValueAtTime(0.1, now + i * 0.07 + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.07 + 0.22);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now + i * 0.07);
+            osc.stop(now + i * 0.07 + 0.22);
+          });
+        } else if (type === 'wrong') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(220, now);
+          osc.frequency.linearRampToValueAtTime(160, now + 0.2);
+          gain.gain.setValueAtTime(0.09, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.22);
+        } else if (type === 'victory') {
+          [523.25, 659.25, 783.99, 1046.5].forEach((freq, idx) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now + idx * 0.1);
+            gain.gain.setValueAtTime(0.12, now + idx * 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.1 + 0.4);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now + idx * 0.1);
+            osc.stop(now + idx * 0.1 + 0.4);
+          });
+        }
+      } catch (e) {}
+    }
+
+    function speakText(text) {
+      if (!('speechSynthesis' in window)) return;
+      try {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text.replace(/\(.*?\)/g, '').replace(/\//g, ' or '));
+        u.lang = 'en-US';
+        u.rate = 0.88;
+        const voices = window.speechSynthesis.getVoices();
+        const enVoice = voices.find(v => (v.lang.startsWith('en-US') || v.lang.startsWith('en')) && (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('Samantha')));
+        if (enVoice) u.voice = enVoice;
+        window.speechSynthesis.speak(u);
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+
+    // 3. PERSISTENCE & USER STATE
+    let userState = {
+      learnedWords: [],
+      learningWords: [],
+      matchBestScore: 0,
+      quizBestScore: 0,
+      totalXp: 0
+    };
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem('lgs_friendship_data');
+        if (raw) userState = { ...userState, ...JSON.parse(raw) };
+      } catch (e) {}
+      updateUIStats();
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem('lgs_friendship_data', JSON.stringify(userState));
+      } catch (e) {}
+      updateUIStats();
+    }
+
+    function updateUIStats() {
+      document.getElementById('nav-xp').innerText = userState.totalXp;
+      document.getElementById('stat-xp').innerText = userState.totalXp;
+      document.getElementById('stat-learned').innerText = userState.learnedWords.length;
+      document.getElementById('stat-match-score').innerText = userState.matchBestScore;
+      document.getElementById('stat-quiz-score').innerText = userState.quizBestScore;
+    }
+
+    // 4. NAVIGATION
+    function showSection(secId) {
+      playSoundEffect('click');
+      ['menu', 'flashcards', 'matching', 'quiz'].forEach(id => {
+        const el = document.getElementById('section-' + id);
+        const btn = document.getElementById('nav-btn-' + id);
+        if (id === secId) {
+          el.classList.remove('hidden');
+          btn.className = "px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 font-semibold transition-colors";
+        } else {
+          el.classList.add('hidden');
+          btn.className = "px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors";
+        }
+      });
+
+      if (secId === 'flashcards') {
+        shuffleCards();
+      } else if (secId === 'matching') {
+        initMatchingRound();
+      } else if (secId === 'quiz') {
+        initQuiz();
+      }
+    }
+
+    // 5. FLASHCARDS LOGIC
+    let currentDeck = [...VOCABULARY].sort(() => Math.random() - 0.5);
+    let cardIdx = 0;
+    let isFlipped = false;
+    let cardFilter = 'all';
+
+    function setCardFilter(filter) {
+      playSoundEffect('click');
+      cardFilter = filter;
+      ['all', 'learning', 'learned'].forEach(f => {
+        const b = document.getElementById('fc-filter-' + f);
+        if (f === filter) {
+          b.className = "flex-1 sm:flex-initial px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-white text-indigo-700 shadow-xs";
+        } else {
+          b.className = "flex-1 sm:flex-initial px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900";
+        }
+      });
+
+      let filtered = VOCABULARY;
+      if (filter === 'learning') {
+        filtered = VOCABULARY.filter(w => userState.learningWords.includes(w.id));
+        if (filtered.length === 0) filtered = [...VOCABULARY];
+      } else if (filter === 'learned') {
+        filtered = VOCABULARY.filter(w => userState.learnedWords.includes(w.id));
+        if (filtered.length === 0) filtered = [...VOCABULARY];
+      }
+      currentDeck = [...filtered].sort(() => Math.random() - 0.5);
+      cardIdx = 0;
+      isFlipped = false;
+      renderCurrentCard();
+    }
+
+    function toggleCardFlip() {
+      playSoundEffect('flip');
+      isFlipped = !isFlipped;
+      const card = document.getElementById('fc-card');
+      if (isFlipped) card.classList.add('rotate-y-180');
+      else card.classList.remove('rotate-y-180');
+    }
+
+    function renderCurrentCard() {
+      const card = document.getElementById('fc-card');
+      card.classList.remove('rotate-y-180');
+      isFlipped = false;
+
+      const w = currentDeck[cardIdx];
+      if (!w) return;
+
+      document.getElementById('fc-counter-current').innerText = cardIdx + 1;
+      document.getElementById('fc-counter-total').innerText = currentDeck.length;
+
+      document.getElementById('fc-category').innerText = w.cat.toUpperCase();
+      document.getElementById('fc-word-en').innerText = w.en;
+      document.getElementById('fc-example-en').innerText = `"${w.exEn}"`;
+
+      document.getElementById('fc-word-tr').innerText = w.tr;
+      document.getElementById('fc-example-tr').innerText = `"${w.exTr}"`;
+      document.getElementById('fc-lgs-tip').innerText = w.tip || '';
+      document.getElementById('fc-synonym').innerText = w.cat;
+
+      const isLrn = userState.learnedWords.includes(w.id);
+      const isIng = userState.learningWords.includes(w.id);
+      const btnLearned = document.getElementById('fc-btn-learned');
+      const btnLearning = document.getElementById('fc-btn-learning');
+
+      if (isLrn) {
+        btnLearned.className = "py-3 px-4 rounded-2xl font-semibold text-sm border bg-emerald-600 text-white border-emerald-700 shadow-sm";
+        btnLearned.innerText = "✓ Öğrendim!";
+      } else {
+        btnLearned.className = "py-3 px-4 rounded-2xl font-semibold text-sm border bg-white text-emerald-800 border-emerald-200 hover:bg-emerald-50";
+        btnLearned.innerText = "✓ Biliyorum (+15 XP)";
+      }
+
+      if (isIng) {
+        btnLearning.className = "py-3 px-4 rounded-2xl font-semibold text-sm border bg-amber-500 text-white border-amber-600 shadow-sm";
+      } else {
+        btnLearning.className = "py-3 px-4 rounded-2xl font-semibold text-sm border bg-white text-amber-800 border-amber-200 hover:bg-amber-50";
+      }
+    }
+
+    function speakCurrentWord(e) {
+      if (e) e.stopPropagation();
+      const w = currentDeck[cardIdx];
+      if (w) speakText(w.en);
+    }
+
+    function nextCard() {
+      playSoundEffect('click');
+      cardIdx = (cardIdx + 1) % currentDeck.length;
+      renderCurrentCard();
+    }
+
+    function prevCard() {
+      playSoundEffect('click');
+      cardIdx = (cardIdx - 1 + currentDeck.length) % currentDeck.length;
+      renderCurrentCard();
+    }
+
+    function shuffleCards() {
+      playSoundEffect('click');
+      currentDeck.sort(() => Math.random() - 0.5);
+      cardIdx = 0;
+      renderCurrentCard();
+    }
+
+    function toggleStatusLearned() {
+      const w = currentDeck[cardIdx];
+      if (!w) return;
+      playSoundEffect('correct');
+      if (!userState.learnedWords.includes(w.id)) {
+        userState.learnedWords.push(w.id);
+        userState.learningWords = userState.learningWords.filter(x => x !== w.id);
+        userState.totalXp += 15;
+      } else {
+        userState.learnedWords = userState.learnedWords.filter(x => x !== w.id);
+      }
+      saveState();
+      renderCurrentCard();
+      setTimeout(nextCard, 300);
+    }
+
+    function toggleStatusLearning() {
+      const w = currentDeck[cardIdx];
+      if (!w) return;
+      playSoundEffect('click');
+      if (!userState.learningWords.includes(w.id)) {
+        userState.learningWords.push(w.id);
+        userState.learnedWords = userState.learnedWords.filter(x => x !== w.id);
+        userState.totalXp += 5;
+      } else {
+        userState.learningWords = userState.learningWords.filter(x => x !== w.id);
+      }
+      saveState();
+      renderCurrentCard();
+      setTimeout(nextCard, 300);
+    }
+
+    window.addEventListener('keydown', (e) => {
+      const sec = document.getElementById('section-flashcards');
+      if (sec.classList.contains('hidden')) return;
+      if (e.code === 'Space' || e.code === 'Enter') {
+        e.preventDefault();
+        toggleCardFlip();
+      } else if (e.code === 'ArrowRight') {
+        nextCard();
+      } else if (e.code === 'ArrowLeft') {
+        prevCard();
+      } else if (e.code === 'KeyS') {
+        speakCurrentWord();
+      }
+    });
+
+    // 6. MATCHING GAME LOGIC (Dynamic Unused Pool Cycle)
+    let matchRound = 1;
+    let matchTimerInterval = null;
+    let matchSeconds = 0;
+    let matchErrors = 0;
+    let matchScore = 0;
+    let matchCombo = 0;
+    let matchSelectedTile = null;
+    let matchTiles = [];
+    let matchMatchedCount = 0;
+    let matchUnusedPool = [];
+    const PAIRS_NUM = 6;
+
+    function initMatchingRound() {
+      clearInterval(matchTimerInterval);
+      matchSeconds = 0;
+      matchErrors = 0;
+      matchCombo = 0;
+      matchMatchedCount = 0;
+      matchSelectedTile = null;
+
+      document.getElementById('match-timer').innerText = '0:00';
+      document.getElementById('match-errors').innerText = '0';
+      document.getElementById('match-score').innerText = matchScore;
+      document.getElementById('match-round-num').innerText = matchRound;
+      document.getElementById('match-combo-badge').classList.add('hidden');
+
+      // Pick fresh unique words from pool without repeating recently played words
+      if (matchUnusedPool.length < PAIRS_NUM) {
+        matchUnusedPool = [...VOCABULARY].sort(() => Math.random() - 0.5);
+      }
+      const selectedWords = matchUnusedPool.splice(0, PAIRS_NUM);
+
+      const generated = [];
+      selectedWords.forEach(w => {
+        generated.push({ id: w.id + '-en', wordId: w.id, text: w.en, lang: 'en', matched: false });
+        generated.push({ id: w.id + '-tr', wordId: w.id, text: w.tr, lang: 'tr', matched: false });
+      });
+      matchTiles = generated.sort(() => Math.random() - 0.5);
+
+      renderMatchingGrid();
+
+      matchTimerInterval = setInterval(() => {
+        matchSeconds++;
+        const mins = Math.floor(matchSeconds / 60);
+        const s = matchSeconds % 60;
+        document.getElementById('match-timer').innerText = `${mins}:${s < 10 ? '0' : ''}${s}`;
+      }, 1000);
+    }
+
+    function renderMatchingGrid() {
+      const container = document.getElementById('match-tiles-grid');
+      container.innerHTML = '';
+
+      matchTiles.forEach(tile => {
+        if (tile.matched) {
+          const matchedEl = document.createElement('div');
+          matchedEl.className = "min-h-[90px] rounded-2xl bg-emerald-50/60 border border-emerald-200/50 flex flex-col items-center justify-center p-3 opacity-40 select-none";
+          matchedEl.innerHTML = `<span class="text-xs sm:text-sm font-medium text-emerald-800 line-through text-center">${tile.text}</span><span class="text-[10px] text-emerald-600 font-semibold mt-1">✓ Eşleşti</span>`;
+          container.appendChild(matchedEl);
+          return;
+        }
+
+        const btn = document.createElement('button');
+        btn.id = 'tile-' + tile.id;
+        const isSelected = matchSelectedTile && matchSelectedTile.id === tile.id;
+
+        btn.className = `min-h-[90px] rounded-2xl border p-3 flex flex-col items-center justify-center text-center transition-all cursor-pointer select-none active:scale-95 ${
+          isSelected 
+            ? 'bg-indigo-50 border-indigo-600 ring-2 ring-indigo-500/20 text-indigo-900 shadow-md scale-[1.02]' 
+            : 'bg-white border-slate-200/90 text-slate-800 hover:border-indigo-300 hover:shadow-xs'
+        }`;
+
+        btn.innerHTML = `
+          <span class="text-[10px] uppercase font-bold tracking-wider mb-1 ${tile.lang === 'en' ? 'text-indigo-500' : 'text-slate-500'}">
+            ${tile.lang === 'en' ? 'İngilizce' : 'Türkçe'}
+          </span>
+          <span class="text-sm font-bold font-display leading-tight">${tile.text}</span>
+        `;
+
+        btn.onclick = () => onTileClick(tile);
+        container.appendChild(btn);
+      });
+    }
+
+    function onTileClick(tile) {
+      if (tile.matched) return;
+
+      if (tile.lang === 'en') {
+        speakText(tile.text);
+      }
+
+      if (!matchSelectedTile) {
+        playSoundEffect('click');
+        matchSelectedTile = tile;
+        renderMatchingGrid();
+        return;
+      }
+
+      if (matchSelectedTile.id === tile.id) {
+        playSoundEffect('click');
+        matchSelectedTile = null;
+        renderMatchingGrid();
+        return;
+      }
+
+      // Check match
+      if (matchSelectedTile.wordId === tile.wordId && matchSelectedTile.lang !== tile.lang) {
+        playSoundEffect('correct');
+        matchCombo++;
+        const pts = 100 + (matchCombo > 1 ? (matchCombo - 1) * 30 : 0);
+        matchScore += pts;
+        document.getElementById('match-score').innerText = matchScore;
+
+        if (matchCombo > 1) {
+          const b = document.getElementById('match-combo-badge');
+          b.classList.remove('hidden');
+          document.getElementById('match-combo-num').innerText = matchCombo;
+        }
+
+        matchTiles.forEach(t => {
+          if (t.id === matchSelectedTile.id || t.id === tile.id) t.matched = true;
+        });
+        matchSelectedTile = null;
+        matchMatchedCount++;
+        renderMatchingGrid();
+
+        if (matchMatchedCount === PAIRS_NUM) {
+          clearInterval(matchTimerInterval);
+          playSoundEffect('victory');
+          confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } });
+
+          userState.matchBestScore = Math.max(userState.matchBestScore, matchScore);
+          userState.totalXp += 50;
+          saveState();
+
+          setTimeout(() => {
+            alert(`🎉 Tebrikler! Tur tamamlandı!\nGeçen Süre: ${document.getElementById('match-timer').innerText}\nHata: ${matchErrors}\nKazanılan Puan: ${matchScore}`);
+            matchRound++;
+            initMatchingRound();
+          }, 600);
+        }
+      } else {
+        playSoundEffect('wrong');
+        matchErrors++;
+        matchCombo = 0;
+        document.getElementById('match-errors').innerText = matchErrors;
+        document.getElementById('match-combo-badge').classList.add('hidden');
+
+        const el1 = document.getElementById('tile-' + matchSelectedTile.id);
+        const el2 = document.getElementById('tile-' + tile.id);
+        if (el1) el1.classList.add('animate-shake', 'bg-rose-50', 'border-rose-400');
+        if (el2) el2.classList.add('animate-shake', 'bg-rose-50', 'border-rose-400');
+
+        setTimeout(() => {
+          matchSelectedTile = null;
+          renderMatchingGrid();
+        }, 600);
+      }
+    }
+
+    // 7. QUIZ LOGIC (Random 10 questions with shuffled options)
+    let currentQuizIdx = 0;
+    let quizScore = 0;
+    let quizAnswered = false;
+    let activeQuizQuestions = [];
+
+    function initQuiz() {
+      currentQuizIdx = 0;
+      quizScore = 0;
+      quizAnswered = false;
+
+      // Select 10 random questions from bank of 20
+      const shuffledBank = [...QUIZ_BANK].sort(() => Math.random() - 0.5);
+      const selected = shuffledBank.slice(0, 10);
+
+      // Shuffle options and map to A, B, C, D
+      activeQuizQuestions = selected.map((q, i) => {
+        const letters = ['A', 'B', 'C', 'D'];
+        const shuffledOpts = [...q.options].sort(() => Math.random() - 0.5);
+        let correctLetter = 'A';
+        const formattedOpts = shuffledOpts.map((text, idx) => {
+          const key = letters[idx];
+          if (text === q.correct) correctLetter = key;
+          return { key, text };
+        });
+
+        return {
+          ...q,
+          id: i + 1,
+          displayTitle: `Soru ${i + 1}: ${q.title}`,
+          options: formattedOpts,
+          correctLetter
+        };
+      });
+
+      document.getElementById('quiz-card').classList.remove('hidden');
+      document.getElementById('quiz-results-card').classList.add('hidden');
+      renderQuizQuestion();
+    }
+
+    function renderQuizQuestion() {
+      quizAnswered = false;
+      const q = activeQuizQuestions[currentQuizIdx];
+      if (!q) return;
+
+      document.getElementById('quiz-current-idx').innerText = currentQuizIdx + 1;
+      document.getElementById('quiz-score-badge').innerText = quizScore;
+      document.getElementById('quiz-progress-bar').style.width = `${((currentQuizIdx + 1) / activeQuizQuestions.length) * 100}%`;
+
+      document.getElementById('quiz-scenario-title').innerText = q.displayTitle;
+      document.getElementById('quiz-target-word').innerText = `Hedef: ${q.target}`;
+      document.getElementById('quiz-question-text').innerText = q.text;
+
+      const diaBox = document.getElementById('quiz-dialogue-box');
+      if (q.dialogue && q.dialogue.length > 0) {
+        diaBox.classList.remove('hidden');
+        diaBox.innerHTML = q.dialogue.map(d => `<div><strong class="text-indigo-900">${d.speaker}:</strong> <span class="text-slate-700">${d.text}</span></div>`).join('');
+      } else {
+        diaBox.classList.add('hidden');
+      }
+
+      document.getElementById('quiz-explanation-box').classList.add('hidden');
+
+      const optContainer = document.getElementById('quiz-options-container');
+      optContainer.innerHTML = '';
+      q.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.id = 'opt-' + opt.key;
+        btn.className = "w-full p-4 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 hover:bg-indigo-50/30 text-left flex items-center justify-between transition-all cursor-pointer";
+        btn.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-bold text-xs shrink-0">${opt.key}</span>
+            <span class="text-sm sm:text-base font-medium">${opt.text}</span>
+          </div>
+        `;
+        btn.onclick = () => selectQuizOption(opt.key);
+        optContainer.appendChild(btn);
+      });
+    }
+
+    function selectQuizOption(chosenKey) {
+      if (quizAnswered) return;
+      quizAnswered = true;
+      const q = activeQuizQuestions[currentQuizIdx];
+      const isCorrect = chosenKey === q.correctLetter;
+
+      if (isCorrect) {
+        playSoundEffect('correct');
+        quizScore++;
+        document.getElementById('quiz-score-badge').innerText = quizScore;
+        confetti({ particleCount: 60, spread: 60, origin: { y: 0.7 } });
+      } else {
+        playSoundEffect('wrong');
+      }
+
+      q.options.forEach(opt => {
+        const btn = document.getElementById('opt-' + opt.key);
+        if (!btn) return;
+        btn.disabled = true;
+        if (opt.key === q.correctLetter) {
+          btn.className = "w-full p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-bold flex items-center justify-between";
+          btn.innerHTML += `<span class="text-emerald-600 font-bold">✓</span>`;
+        } else if (opt.key === chosenKey && !isCorrect) {
+          btn.className = "w-full p-4 rounded-2xl border-2 border-rose-400 bg-rose-50 text-rose-900 font-bold flex items-center justify-between";
+          btn.innerHTML += `<span class="text-rose-600 font-bold">✗</span>`;
+        } else {
+          btn.className = "w-full p-4 rounded-2xl border border-slate-200 bg-slate-50 text-slate-400 opacity-60 flex items-center justify-between";
+        }
+      });
+
+      document.getElementById('quiz-explanation-text').innerText = q.explanation;
+      document.getElementById('quiz-explanation-box').classList.remove('hidden');
+
+      if (currentQuizIdx + 1 === activeQuizQuestions.length) {
+        document.getElementById('quiz-next-btn').innerText = "Sonuçları Gör 🏆";
+      } else {
+        document.getElementById('quiz-next-btn').innerText = "Sonraki Soruya Geç →";
+      }
+    }
+
+    function nextQuizQuestion() {
+      playSoundEffect('click');
+      if (currentQuizIdx + 1 < activeQuizQuestions.length) {
+        currentQuizIdx++;
+        renderQuizQuestion();
+      } else {
+        playSoundEffect('victory');
+        confetti({ particleCount: 120, spread: 90, origin: { y: 0.5 } });
+        document.getElementById('quiz-card').classList.add('hidden');
+        document.getElementById('quiz-results-card').classList.remove('hidden');
+
+        document.getElementById('quiz-final-correct').innerText = quizScore;
+        document.getElementById('quiz-final-percent').innerText = `%${Math.round((quizScore / activeQuizQuestions.length) * 100)}`;
+        const earnedXp = quizScore * 20;
+        document.getElementById('quiz-final-xp').innerText = `+${earnedXp} XP`;
+
+        userState.quizBestScore = Math.max(userState.quizBestScore, quizScore);
+        userState.totalXp += earnedXp;
+        saveState();
+      }
+    }
+
+    // 8. GLOSSARY MODAL
+    function openGlossaryModal() {
+      playSoundEffect('click');
+      document.getElementById('glossary-modal').classList.remove('hidden');
+      renderGlossary();
+    }
+
+    function closeGlossaryModal() {
+      playSoundEffect('click');
+      document.getElementById('glossary-modal').classList.add('hidden');
+    }
+
+    function renderGlossary() {
+      const q = (document.getElementById('glossary-search').value || '').toLowerCase();
+      const list = document.getElementById('glossary-list');
+      list.innerHTML = '';
+
+      const filtered = VOCABULARY.filter(w => w.en.toLowerCase().includes(q) || w.tr.toLowerCase().includes(q));
+      if (filtered.length === 0) {
+        list.innerHTML = `<div class="text-center py-8 text-slate-400 text-xs">Aramanızla eşleşen kelime bulunamadı.</div>`;
+        return;
+      }
+
+      filtered.forEach(w => {
+        const row = document.createElement('div');
+        row.className = "py-3 flex items-center justify-between gap-3";
+        row.innerHTML = `
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-slate-900 text-sm">${w.en}</span>
+              <span class="text-[10px] uppercase font-semibold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">${w.cat}</span>
+            </div>
+            <div class="text-xs text-indigo-950 font-medium">${w.tr}</div>
+            <div class="text-[11px] text-slate-500 italic">"${w.exEn}"</div>
+          </div>
+          <button onclick="speakText('${w.en}')" class="p-2 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-600 transition-colors" title="Sesli Dinle">
+            🔊
+          </button>
+        `;
+        list.appendChild(row);
+      });
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', () => {
+      loadState();
+      renderCurrentCard();
+    });
+  </script>
+</body>
+</html>
